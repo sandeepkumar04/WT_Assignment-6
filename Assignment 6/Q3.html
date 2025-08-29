@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Phone Number Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      width: 350px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    .message {
+      margin-top: 6px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Phone Number Validation</h2>
+    <form>
+      <div class="form-group">
+        <label for="phone">Enter Phone Number</label>
+        <input type="text" id="phone" placeholder="(123) 456-7890 or 123-456-7890">
+        <div id="phoneMessage" class="message"></div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const phoneInput = document.getElementById("phone");
+    const phoneMessage = document.getElementById("phoneMessage");
+
+    // Regex for US phone formats: (123) 456-7890 OR 123-456-7890
+    const phoneRegex = /^(\(\d{3}\)\s?\d{3}-\d{4}|\d{3}-\d{3}-\d{4})$/;
+
+    phoneInput.addEventListener("input", function () {
+      const value = phoneInput.value.trim();
+
+      if (value === "") {
+        phoneMessage.textContent = "";
+        return;
+      }
+
+      if (phoneRegex.test(value)) {
+        phoneMessage.textContent = "✅ Valid Phone Number";
+        phoneMessage.classList.remove("error");
+        phoneMessage.classList.add("success");
+      } else {
+        phoneMessage.textContent = "❌ Invalid Format. Use (123) 456-7890 or 123-456-7890";
+        phoneMessage.classList.remove("success");
+        phoneMessage.classList.add("error");
+      }
+    });
+  </script>
+</body>
+</html>

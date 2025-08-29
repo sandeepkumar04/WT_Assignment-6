@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Form Builder</title>
+</head>
+<body>
+  <h2>Dynamic Form Builder</h2>
+
+  <!-- Dropdown to select input type -->
+  <label for="fieldType">Choose Input Type: </label>
+  <select id="fieldType">
+    <option value="text">Text</option>
+    <option value="email">Email</option>
+    <option value="password">Password</option>
+  </select>
+  <button type="button" id="addField">Add</button>
+
+  <form id="dynamicForm">
+    <h3>Generated Form</h3>
+    <div id="formFields"></div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const addBtn = document.getElementById("addField");
+    const formFields = document.getElementById("formFields");
+    const form = document.getElementById("dynamicForm");
+
+    // Validation regex for each type
+    const regexMap = {
+      text: /^[A-Za-z\s]{3,}$/, // at least 3 letters
+      email: /^[^@\s]+@[^@\s]+\.[^@\s]+$/, // simple email regex
+      password: /^(?=.[A-Z])(?=.\d).{8,}$/ // min 8 chars, 1 uppercase, 1 digit
+    };
+
+    // Add new input dynamically
+    addBtn.addEventListener("click", () => {
+      const fieldType = document.getElementById("fieldType").value;
+
+      const wrapper = document.createElement("div");
+      wrapper.style.margin = "8px 0";
+
+      const input = document.createElement("input");
+      input.type = fieldType;
+      input.placeholder = Enter ${fieldType};
+      input.dataset.type = fieldType;
+
+      const message = document.createElement("span");
+      message.style.marginLeft = "10px";
+
+      // Real-time validation
+      input.addEventListener("input", () => {
+        const regex = regexMap[input.dataset.type];
+        if (regex.test(input.value)) {
+          message.textContent = "✅ Valid";
+          message.style.color = "green";
+        } else {
+          message.textContent = "❌ Invalid";
+          message.style.color = "red";
+        }
+      });
+
+      wrapper.appendChild(input);
+      wrapper.appendChild(message);
+      formFields.appendChild(wrapper);
+    });
+
+    // Final form submission validation
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let allValid = true;
+
+      document.querySelectorAll("#formFields input").forEach(input => {
+        const regex = regexMap[input.dataset.type];
+        if (!regex.test(input.value)) {
+          allValid = false;
+          alert(Invalid ${input.dataset.type} input: ${input.value});
+        }
+      });
+
+      if (allValid) {
+        alert("Form submitted successfully ✅");
+      }
+    });
+  </script>
+</body>
+</html>
