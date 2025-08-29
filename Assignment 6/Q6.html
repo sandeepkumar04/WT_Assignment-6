@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Username Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    .message {
+      margin-top: 6px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Username Validation</h2>
+    <form id="usernameForm">
+      <div class="form-group">
+        <label for="username">Enter Username</label>
+        <input type="text" id="username" placeholder="3–16 chars, letters/numbers/_">
+        <div id="usernameMessage" class="message"></div>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const usernameInput = document.getElementById("username");
+    const usernameMessage = document.getElementById("usernameMessage");
+    const form = document.getElementById("usernameForm");
+
+    // Regex for username validation
+    const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
+
+    function validateUsername() {
+      const value = usernameInput.value.trim();
+
+      if (usernameRegex.test(value)) {
+        usernameMessage.textContent = "✅ Valid Username";
+        usernameMessage.classList.remove("error");
+        usernameMessage.classList.add("success");
+        return true;
+      } else {
+        usernameMessage.textContent = "❌ Invalid Username. Use 3-16 letters, numbers, or underscores.";
+        usernameMessage.classList.remove("success");
+        usernameMessage.classList.add("error");
+        return false;
+      }
+    }
+
+    // Live validation
+    usernameInput.addEventListener("input", validateUsername);
+
+    // Prevent form submission if invalid
+    form.addEventListener("submit", function (e) {
+      if (!validateUsername()) {
+        e.preventDefault();
+        alert("Fix the username before submitting ❌");
+      } else {
+        alert("Form submitted successfully ✅");
+      }
+    });
+  </script>
+</body>
+</html>
