@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Hobbies Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .success {
+      color: green;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 8px;
+      background: #007bff;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Hobbies Form</h2>
+    <form id="hobbyForm">
+      <div class="form-group">
+        <label for="hobby1">Hobby 1</label>
+        <input type="text" name="hobby" class="hobby-input" placeholder="Enter a hobby">
+        <div class="error"></div>
+      </div>
+      <button type="button" id="addHobbyBtn">➕ Add Hobby</button>
+    </form>
+  </div>
+
+  <script>
+    const hobbyForm = document.getElementById("hobbyForm");
+    const addHobbyBtn = document.getElementById("addHobbyBtn");
+
+    // Regex for only alphabets + spaces
+    const hobbyRegex = /^[A-Za-z\s]+$/;
+
+    // Validate hobby input
+    function validateHobby(input, errorDiv) {
+      const value = input.value.trim();
+      if (value === "") {
+        errorDiv.textContent = "";
+        return;
+      }
+      if (hobbyRegex.test(value)) {
+        errorDiv.textContent = "✅ Valid hobby";
+        errorDiv.className = "success";
+      } else {
+        errorDiv.textContent = "❌ Only alphabets and spaces allowed";
+        errorDiv.className = "error";
+      }
+    }
+
+    // Add event listener to existing input
+    function attachValidation(input, errorDiv) {
+      input.addEventListener("input", () => validateHobby(input, errorDiv));
+    }
+
+    // Attach validation to first hobby input
+    const firstInput = document.querySelector(".hobby-input");
+    const firstError = firstInput.nextElementSibling;
+    attachValidation(firstInput, firstError);
+
+    // Add new hobby field dynamically
+    addHobbyBtn.addEventListener("click", () => {
+      const count = document.querySelectorAll(".hobby-input").length + 1;
+
+      const group = document.createElement("div");
+      group.classList.add("form-group");
+
+      const label = document.createElement("label");
+      label.textContent = Hobby ${count};
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.name = "hobby";
+      input.classList.add("hobby-input");
+      input.placeholder = "Enter a hobby";
+
+      const errorDiv = document.createElement("div");
+      errorDiv.classList.add("error");
+
+      group.appendChild(label);
+      group.appendChild(input);
+      group.appendChild(errorDiv);
+      hobbyForm.insertBefore(group, addHobbyBtn);
+
+      attachValidation(input, errorDiv);
+    });
+  </script>
+</body>
+</html>
