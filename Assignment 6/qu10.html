@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+<select id="type">
+  <option value="text">Text</option>
+  <option value="email">Email</option>
+  <option value="password">Password</option>
+</select>
+<button onclick="addField()">Add</button>
+<form id="form"></form>
+
+<script>
+function addField(){
+  let type=document.getElementById("type").value;
+  let input=document.createElement("input");
+  input.type=type;
+  input.placeholder=type;
+  input.onblur=function(){
+    let val=input.value, ok=true;
+    if(type==="email") ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
+    if(type==="text") ok=/^[A-Za-z0-9]+$/.test(val);
+    if(!ok) alert("Invalid "+type);
+  }
+  document.getElementById("form").appendChild(input);
+  document.getElementById("form").appendChild(document.createElement("br"));
+}
+</script>
+</body>
+</html>
