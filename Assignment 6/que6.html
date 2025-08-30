@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+Username: <input type="text" id="uname"><br>
+<span id="msg"></span>
+
+<script>
+uname.onblur=function(){
+  let regex=/^[a-zA-Z0-9_]{3,16}$/;
+  document.getElementById("msg").innerText=
+    regex.test(uname.value)? "Valid":"Invalid Username";
+}
+</script>
+</body>
+</html>

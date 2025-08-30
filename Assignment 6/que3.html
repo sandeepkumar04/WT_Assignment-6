@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+Phone: <input type="text" id="phone"><br>
+<span id="msg"></span>
+
+<script>
+let phone=document.getElementById("phone");
+phone.addEventListener("input",function(){
+  let regex=/^(\(\d{3}\)\s?\d{3}-\d{4}|\d{3}-\d{3}-\d{4})$/;
+  document.getElementById("msg").innerText=
+    regex.test(phone.value)? "Valid":"Invalid";
+});
+</script>
+</body>
+</html>

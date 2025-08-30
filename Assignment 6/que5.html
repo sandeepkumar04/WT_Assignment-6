@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+Password: <input type="password" id="p1"><br>
+Confirm: <input type="password" id="p2"><br>
+<span id="msg"></span>
+
+<script>
+function check(){
+  let m=document.getElementById("msg");
+  m.innerText= p1.value && p1.value===p2.value? "Passwords match":"Passwords do not match";
+  m.style.color=(p1.value===p2.value)?"green":"red";
+}
+p1.oninput=p2.oninput=check;
+</script>
+</body>
+</html>

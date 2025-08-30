@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+Email: <input type="text" id="email"><br>
+<span id="msg"></span>
+
+<script>
+let email=document.getElementById("email");
+email.onblur=function(){
+  let regex=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+  document.getElementById("msg").innerText=
+    regex.test(email.value)? "Valid Email":"Invalid Email";
+}
+</script>
+</body>
+</html>
